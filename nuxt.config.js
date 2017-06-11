@@ -16,12 +16,6 @@ module.exports = {
     ]
   },
   /*
-  ** Router config
-  */
-  router: {
-    middleware: 'auth'
-  },
-  /*
   ** Css Loader
   */
   css: [

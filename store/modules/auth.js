@@ -36,7 +36,11 @@ const actions = {
         var arr = sp.split('=')
         arr[1] && (result[arr[0]] = arr[1])
       })
-      context.commit('OAUTH_AUTHEN', { status: true, name: jwt(result.at).name, authority: jwt(result.at).authorities[0] })
+      if (result.at) {
+        context.commit('OAUTH_AUTHEN', { status: true, name: jwt(result.at).name, authority: jwt(result.at).authorities[0] })
+      } else {
+        context.commit('OAUTH_AUTHEN', { status: false })
+      }
     }
   },
   login: (context, vc) => {

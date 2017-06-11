@@ -1,3 +1,5 @@
 export default function (context) {
-  context.store.dispatch('checkAuth', context.router)
+  if (!context.store.state.auth.authenticated) {
+    return context.redirect('/login')
+  }
 }
