@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   /*
   ** Headers of the page
@@ -14,10 +16,26 @@ module.exports = {
     ]
   },
   /*
+  ** Router config
+  */
+  router: {
+    middleware: 'auth'
+  },
+  /*
   ** Css Loader
   */
   css: [
-    '~assets/css/style.light-blue-500.min.css'
+    { src: 'animate.css/animate.css' },
+    { src: 'bootstrap/dist/css/bootstrap.css' },
+    { src: 'font-awesome/css/font-awesome.css' },
+    { src: 'material-design-iconic-font/dist/css/material-design-iconic-font.css' },
+    { src: '~assets/css/style.light-blue-500.min.css' }
+  ],
+  /*
+  ** Plugins Loader
+  */
+  plugins: [
+    { src: '~plugins/bootstrap' }
   ],
   /*
   ** Customize the progress-bar color
@@ -27,6 +45,18 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor: [
+      'jquery',
+      'bootstrap',
+      'axios'
+    ],
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
+      })
+    ],
     /*
     ** Run ESLINT on save
     */
