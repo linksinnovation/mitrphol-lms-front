@@ -36,9 +36,7 @@
     "pdfobject": "^2.0.201604172",
     "sass-loader": "^6.0.5",
     "videojs-contrib-hls": "^5.5.3",
-    "vue-pdf": "^1.2.2",
     "vue-video-player": "^3.1.1",
-    "vuex": "^2.3.1",
-    "vuex-persistedstate": "^1.4.1"
+    "vuex": "^2.3.1"
   }
 }

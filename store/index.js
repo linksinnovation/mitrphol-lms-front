@@ -1,15 +1,13 @@
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 
 import auth from './modules/auth'
+import course from './modules/course'
 
 const store = () => new Vuex.Store({
   modules: {
-    auth: auth
-  },
-  plugins: [
-    createPersistedState()
-  ]
+    auth: auth,
+    course: course
+  }
 })
 
 export default store

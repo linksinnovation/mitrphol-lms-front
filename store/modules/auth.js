@@ -1,4 +1,5 @@
 import auth from '~/utils/auth'
+import cookie from '~/utils/cookie'
 import jwt from 'jwt-decode'
 import * as Cookies from 'js-cookie'
 
@@ -36,11 +37,7 @@ const mutations = {
 const actions = {
   nuxtServerInit: (context, vc) => {
     if (vc.isServer && vc.req.headers.cookie) {
-      var result = {}
-      vc.req.headers.cookie.split('; ').forEach(function (sp) {
-        var arr = sp.split('=')
-        arr[1] && (result[arr[0]] = arr[1])
-      })
+      var result = cookie(vc)
       if (result.at) {
         context.commit('OAUTH_AUTHEN', { status: true, error: '', name: jwt(result.at).name, authority: jwt(result.at).authorities[0] })
       } else {
@@ -53,6 +50,7 @@ const actions = {
       Cookies.set('at', data.data.access_token, { expires: 1, secure: false })
       Cookies.set('rt', data.data.refresh_token, { expires: 1, secure: false })
       context.commit('OAUTH_AUTHEN', { status: true, error: '', name: jwt(data.data.access_token).name, authority: jwt(data.data.access_token).authorities[0] })
+      context.dispatch('load', data.data.access_token)
       vc.$router.push('/')
     }, (data) => {
       if (data.response.status === 500) {
