@@ -7,6 +7,16 @@
         </div>
         <h3>MANAGEMENT SYSTEM</h3>
         <form class="mt" role="form" v-on:submit.prevent="onSubmit" autocomplete="off">
+          <div class="alert alert-danger alert-light alert-dismissible" role="alert" v-if="error != ''">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <i class="zmdi zmdi-close"></i>
+            </button>
+            <strong>
+              <i class="zmdi zmdi-close-circle"></i> Error!
+            </strong>
+            {{error}}
+          </div>
+  
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Username" required="" v-model="credentials.username">
           </div>
@@ -21,6 +31,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'login',
   data: function () {
@@ -35,7 +47,10 @@ export default {
     onSubmit: function () {
       this.$store.dispatch('login', this)
     }
-  }
+  },
+  computed: mapGetters({
+    error: 'error'
+  })
 }
 </script>
 

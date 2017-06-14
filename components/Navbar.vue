@@ -19,12 +19,16 @@
             </a>
             <ul class="dropdown-menu">
               <li v-if="authority == 'Administrator'">
-                <router-link :to="{path: '/assessment'}">
-                  <i class="zmdi zmdi-view-compact"></i> เพิ่มแบบประเมิน</router-link>
+                <router-link :to="{path: '/examination'}">
+                  <i class="zmdi zmdi-view-compact"></i> คลังข้อสอบ</router-link>
               </li>
               <li v-if="authority == 'Administrator'">
-                <router-link :to="{path: '/permission'}">
-                  <i class="zmdi zmdi-view-compact"></i> กำหนดสิทธิ์การใช้งาน</router-link>
+                <router-link :to="{path: '/course/new'}">
+                  <i class="zmdi zmdi-view-compact"></i> เพิ่มบทเรียน</router-link>
+              </li>
+              <li v-if="authority == 'Administrator'">
+                <router-link :to="{path: '/manages'}">
+                  <i class="zmdi zmdi-view-compact"></i> จัดการและตั้งค่าบทเรียน</router-link>
               </li>
               <li class="divider" v-if="authority == 'Administrator'"></li>
               <li>

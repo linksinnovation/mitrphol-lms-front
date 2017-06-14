@@ -20,12 +20,12 @@ export default {
     }
 
     return axios.post(OAUTH_TOKEN, form, {
-      baseURL: 'http://localhost:8080/',
+      baseURL: 'http://localhost:3002/',
       headers: config.headers
     })
   },
   checkAuth: function (at) {
-    return axios.get('http://localhost:8080' + OAUTH_CHECK + at, {
+    return axios.get('http://localhost:3002' + OAUTH_CHECK + at, {
       headers: {
         Authorization: 'Basic ' + OAUTH_HASH
       }

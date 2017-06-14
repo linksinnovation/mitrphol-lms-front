@@ -20,6 +20,7 @@
     "axios": "^0.16.2",
     "babel-eslint": "^7.1.1",
     "bootstrap": "^3.3.7",
+    "bootstrap-material-design": "^0.5.10",
     "eslint": "^3.15.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-loader": "^1.6.1",
@@ -32,7 +33,11 @@
     "jwt-decode": "^2.2.0",
     "material-design-iconic-font": "^2.2.0",
     "node-sass": "^4.5.3",
+    "pdfobject": "^2.0.201604172",
     "sass-loader": "^6.0.5",
+    "videojs-contrib-hls": "^5.5.3",
+    "vue-pdf": "^1.2.2",
+    "vue-video-player": "^3.1.1",
     "vuex": "^2.3.1",
     "vuex-persistedstate": "^1.4.1"
   }
