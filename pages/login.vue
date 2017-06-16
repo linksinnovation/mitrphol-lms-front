@@ -45,11 +45,11 @@ export default {
   },
   methods: {
     onSubmit: function () {
-      this.$store.dispatch('login', this)
+      this.$store.dispatch('auth/login', this)
     }
   },
   computed: mapGetters({
-    error: 'error'
+    error: 'auth/error'
   })
 }
 </script>

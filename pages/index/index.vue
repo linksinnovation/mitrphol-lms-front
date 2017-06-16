@@ -15,7 +15,7 @@ export default {
     Card
   },
   computed: mapGetters({
-    courses: 'courses'
+    courses: 'course/courses'
   })
 }
 </script>

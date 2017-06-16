@@ -1,23 +1,24 @@
 <template>
   <div class="lecture">
-    <div class="video-player-box" @ended="onPlayerEnded($event)" v-video-player:myVideoPlayer="playerOptions"></div>
+    <div class="video-player-box" @ended="onPlayerEnded($event)" v-video-player:video="playerOptions" v-show="lecture.contentType === 'VIDEO'"></div>
+    <div id="pdf" v-show="lecture.contentType === 'PDF'"></div>
   </div>
 </template>
 
 <script>
-import http from '~/utils/http'
+import { mapGetters } from 'vuex'
 import PDFObject from 'pdfobject'
+import finder from '~/utils/finder'
 
 export default {
   data: function () {
     return {
-      courseId: this.$route.params.course,
-      data: {},
+      lecture: { id: 'haha' },
       playerOptions: {
         sources: [{
           withCredentials: false,
           type: 'application/x-mpegURL',
-          src: 'http://mpintegrity.mitrphol.com/vdo/8e47bb95738b090baf28d731fa8e3785/720p.m3u8'
+          src: ''
         }],
         controlBar: {
           timeDivider: false,
@@ -28,31 +29,31 @@ export default {
       }
     }
   },
-  created: function () {
-    this.fetchData()
+  computed: mapGetters({
+    courses: 'course/courses'
+  }),
+  mounted: function () {
+    this.$nextTick(function () {
+      this.loadLecture()
+    })
   },
   watch: {
-    '$route': 'fetchData'
+    $route: function () {
+      this.$nextTick(function () {
+        this.loadLecture()
+      })
+    }
   },
   methods: {
-    fetchData: function () {
-      var self = this
-      http
-        .get('/api/course/' + this.courseId)
-        .then(function (response) {
-          self.$set(self, 'data', response.data)
-          self.changeCourse(0, 0)
-        })
-    },
-    changeCourse: function (index, subIndex) {
-      var lecture = this.data.lessions[index].lectures[subIndex]
-      if (lecture.contentType === 'VIDEO') {
-        this.myVideoPlayer.src({
+    loadLecture: function () {
+      this.lecture = finder.findLecture(this.courses, this.$route.params.lecture)
+      if (this.lecture.contentType === 'VIDEO') {
+        this.video.src({
           type: 'application/x-mpegURL',
-          src: 'http://mpintegrity.mitrphol.com/vdo/' + lecture.uuid + '/720p.m3u8'
+          src: 'http://mpintegrity.mitrphol.com/vdo/' + this.lecture.uuid + '/720p.m3u8'
         })
       } else {
-        PDFObject.embed('http://localhost:3002/files/' + lecture.id + '-' + lecture.content, '#pdf')
+        PDFObject.embed('http://localhost:3002/files/' + this.lecture.id + '-' + this.lecture.content, '#pdf')
       }
     }
   }

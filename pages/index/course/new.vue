@@ -19,8 +19,8 @@
                       <i class="fa fa-bold"></i> ตั้งค่า</a>
                     <ul id="c1" role="tabpanel" aria-labelledby="e1" class="panel-collapse collapse in">
                       <li>
-                        <a href="component-typography.html" class="withripple active">
-                          <i class="fa fa-font"></i> ตั้งค่าบทเรียน</a>
+                        <nuxt-link to="/course/new" class="withripple active">
+                          <i class="fa fa-font"></i> ตั้งค่าบทเรียน</nuxt-link>
                       </li>
                     </ul>
                   </li>
@@ -64,8 +64,6 @@
 </template>
 
 <script>
-import http from '~/utils/http'
-
 export default {
   data: function () {
     return {
@@ -77,15 +75,7 @@ export default {
   },
   methods: {
     onSave: function () {
-      var self = this
-      http
-        .post('/api/course', this.data)
-        .then((response) => {
-          self.$router.push({ path: '/manage/' + response.data.id + '/setting' })
-        })
-        .catch(() => {
-          self.$router.replace('/login')
-        })
+      this.$store.dispatch('course/add', this)
     }
   }
 }

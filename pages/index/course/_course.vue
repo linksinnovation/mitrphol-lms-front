@@ -1,5 +1,5 @@
 <template>
-  <div class="course">
+  <div class="course" v-if="getCourse()">
     <div class="material-background"></div>
     <div class="container container-full">
       <div class="ms-paper">
@@ -14,7 +14,7 @@
               </h3>
               <div id="collapseMenu" class="panel-menu collapse">
                 <ul id="components-nav" role="tablist" aria-multiselectable="true" class="panel-group ms-collapse-nav">
-                  <li role="tab" :id="'e'+index" class="panel" v-for="(lession,index) of data.lessions">
+                  <li role="tab" :id="'e'+index" class="panel" v-for="(lession,index) of getCourse().lessions">
                     <a role="button" data-toggle="collapse" data-parent="#components-nav" :href="'#c'+index" aria-expanded="false" :aria-controls="'c'+index" class="collapsed withripple">
                       <i class="fa fa-bold"></i> {{lession.name}}</a>
                     <ul :id="'c'+index" role="tabpanel" :aria-labelledby="'e'+index" class="panel-collapse collapse">
@@ -42,36 +42,22 @@
 </template>
 
 <script>
-import http from '~/utils/http'
+import { mapGetters } from 'vuex'
+import finder from '~/utils/finder'
 
 export default {
   data: function () {
     return {
       courseId: this.$route.params.course,
-      lectureId: this.$route.params.lecture,
-      data: {}
+      lectureId: this.$route.params.lecture
     }
   },
-  created: function () {
-    this.fetchData()
-  },
-  watch: {
-    '$route': 'fetchData'
-  },
+  computed: mapGetters({
+    courses: 'course/courses'
+  }),
   methods: {
-    fetchData: function () {
-      var self = this
-      http
-        .get('/api/course/' + this.courseId)
-        .then(function (response) {
-          self.$set(self, 'data', response.data)
-        })
-    },
-    inLession: function (index) {
-      var self = this
-      return this.data.lessions[index].lectures.find(function (item) {
-        return Number(item.id) === Number(self.lectureId)
-      })
+    getCourse: function () {
+      return finder.findCourse(this.courses, this.$route.params.course)
     }
   }
 }

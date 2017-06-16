@@ -73,13 +73,13 @@ export default {
   name: 'navbar',
   methods: {
     logout: function () {
-      this.$store.dispatch('logout', this)
+      this.$store.dispatch('auth/logout', this)
     }
   },
   computed: mapGetters({
-    authenticated: 'authenticated',
-    name: 'name',
-    authority: 'authority'
+    authenticated: 'auth/authenticated',
+    name: 'auth/name',
+    authority: 'auth/authority'
   })
 }
 </script>
